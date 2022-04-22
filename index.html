@@ -804,6 +804,7 @@
 
 
         function fillData(dataForm) {
+            alert('Alert ne!!!!')
             dataForm = JSON.parse(dataForm)
 
             fNameElement.value = dataForm.fname
@@ -846,7 +847,6 @@
                 infection_checkbox: checked_box.toString()
             }
             console.log("🚀 ~ file: index.html ~ line 816 ~ sendData ~ data", data)
-            alert("long ne Dang!!!!s")
 
             window.ReactNativeWebView.postMessage(JSON.stringify(data));
         }
