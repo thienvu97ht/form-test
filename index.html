@@ -794,16 +794,18 @@
 
         const checkboxElement = document.querySelectorAll('.infection_checkbox');
 
-        const dataForm = {
+        const dataForm = JSON.stringify({
             fname: 'Duong Vu',
             gender: 'FEMALE',
             hospitalized_date: '1997-07-21',
             infection_option: 0,
             infection_checkbox: '1,3'
-        }
+        })
 
 
-        function fillData(params) {
+        function fillData(dataForm) {
+            dataForm = JSON.parse(dataForm)
+
             fNameElement.value = dataForm.fname
             genderElement.value = dataForm.gender
             hospitalizedDateElement.value = dataForm.hospitalized_date
@@ -822,7 +824,7 @@
             }
         }
 
-        fillData()
+        // fillData(dataForm)
 
         function sendData() {
             let checked_option = 0
@@ -845,7 +847,7 @@
             }
             console.log("🚀 ~ file: index.html ~ line 816 ~ sendData ~ data", data)
 
-            window.ReactNativeWebView.postMessage(data);
+            window.ReactNativeWebView.postMessage(JSON.stringify(data));
         }
     </script>
 </body>
