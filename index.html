@@ -803,26 +803,26 @@
         })
 
 
-        function fillData(dataForm) {
+        function fillData() {
             alert('Alert ne!!!!')
-            dataForm = JSON.parse(dataForm)
+            // dataForm = JSON.parse(dataForm)
 
-            fNameElement.value = dataForm.fname
-            genderElement.value = dataForm.gender
-            hospitalizedDateElement.value = dataForm.hospitalized_date
-            if (dataForm.infection_option) {
-                infectionTrueElement.checked = true
-            } else {
-                infectionFalseElement.checked = true
-            }
+            // fNameElement.value = dataForm.fname
+            // genderElement.value = dataForm.gender
+            // hospitalizedDateElement.value = dataForm.hospitalized_date
+            // if (dataForm.infection_option) {
+            //     infectionTrueElement.checked = true
+            // } else {
+            //     infectionFalseElement.checked = true
+            // }
 
-            for (let index = 1; index <= checkboxElement.length; index++) {
-                for (let item of dataForm.infection_checkbox.split(',')) {
-                    if (index === +item) {
-                        checkboxElement[item - 1].checked = true
-                    }
-                }
-            }
+            // for (let index = 1; index <= checkboxElement.length; index++) {
+            //     for (let item of dataForm.infection_checkbox.split(',')) {
+            //         if (index === +item) {
+            //             checkboxElement[item - 1].checked = true
+            //         }
+            //     }
+            // }
         }
 
         // fillData(dataForm)
@@ -847,7 +847,7 @@
                 infection_checkbox: checked_box.toString()
             }
             console.log("🚀 ~ file: index.html ~ line 816 ~ sendData ~ data", data)
-
+            alert('Alert ne Dang!!!')
             window.ReactNativeWebView.postMessage(JSON.stringify(data));
         }
     </script>
