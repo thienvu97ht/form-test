@@ -725,11 +725,6 @@
                 </div>
 
                 <div class="form_box">
-                    <p class="text">Ngày tháng năm nhập viện*</p>
-                    <input type="date" id="hospitalized_day" name="hospitalized_day">
-                </div>
-
-                <div class="form_box">
                     <p class="text">Giới tính</p>
                     <select class="select_custom" id="gender">
                         <option class="option_custom" value="MALE">Nam</option>
@@ -738,32 +733,43 @@
                 </div>
 
                 <div class="form_box">
+                    <p class="text">Ngày tháng năm nhập viện*</p>
+                    <input type="date" id="hospitalized_date" name="hospitalized_date">
+                </div>
+
+
+
+                <div class="form_box">
                     <div>
                         <p class="text">Nhiễm khuẩn lúc vào khoa</p>
-                        <input type="radio" id="male" name="infection" value="MALE">
-                        <label for="male">Có</label>
-                        <input type="radio" id="female" name="infection" value="FEMALE">
-                        <label for="female">Không</label>
+                        <input type="radio" id="infection_true" name="is_infection" value="1">
+                        <label for="infection_true">Có</label>
+                        <input type="radio" id="infection_false" name="is_infection" value="0">
+                        <label for="infection_false">Không</label>
                     </div>
 
                     <div class="checkbox_container">
                         <div class="checkbox_box">
                             <div class="checkbox_item">
-                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+                                <input type="checkbox" class="infection_checkbox" id="vehicle1" name="vehicle1"
+                                    value="1">
                                 <label for="vehicle1">Lựa chọn 1</label>
                             </div>
                             <div class="checkbox_item">
-                                <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
+                                <input type="checkbox" class="infection_checkbox" id="vehicle2" name="vehicle2"
+                                    value="2">
                                 <label for="vehicle2">Lựa chọn 2</label>
                             </div>
                         </div>
                         <div class="checkbox_box">
                             <div class="checkbox_item">
-                                <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
+                                <input type="checkbox" class="infection_checkbox" id="vehicle3" name="vehicle3"
+                                    value="3">
                                 <label for="vehicle3">Lựa chọn 3</label>
                             </div>
                             <div class="checkbox_item">
-                                <input type="checkbox" id="vehicle4" name="vehicle4" value="Boat">
+                                <input type="checkbox" class="infection_checkbox" id="vehicle4" name="vehicle4"
+                                    value="4">
                                 <label for="vehicle4">Lựa chọn 4</label>
                             </div>
                         </div>
@@ -779,13 +785,67 @@
     </div>
 
     <script>
-        function fillData(params) {
-            document.getElementById('fname').value = params
+        // Element
+        const fNameElement = document.getElementById('fname')
+        const genderElement = document.getElementById('gender')
+        const hospitalizedDateElement = document.getElementById('hospitalized_date')
+        const infectionTrueElement = document.getElementById('infection_true')
+        const infectionFalseElement = document.getElementById('infection_false')
+
+        const checkboxElement = document.querySelectorAll('.infection_checkbox');
+
+        const dataForm = {
+            fname: 'Duong Vu',
+            gender: 'FEMALE',
+            hospitalized_date: '1997-07-21',
+            infection_option: 0,
+            infection_checkbox: '1,3'
         }
 
+
+        function fillData(params) {
+            fNameElement.value = dataForm.fname
+            genderElement.value = dataForm.gender
+            hospitalizedDateElement.value = dataForm.hospitalized_date
+            if (dataForm.infection_option) {
+                infectionTrueElement.checked = true
+            } else {
+                infectionFalseElement.checked = true
+            }
+
+            for (let index = 1; index <= checkboxElement.length; index++) {
+                for (let item of dataForm.infection_checkbox.split(',')) {
+                    if (index === +item) {
+                        checkboxElement[item - 1].checked = true
+                    }
+                }
+            }
+        }
+
+        fillData()
+
         function sendData() {
-            const value = document.getElementById('fname').value
-            window.ReactNativeWebView.postMessage(value);
+            let checked_option = 0
+            let checked_box = []
+            // const value = document.getElementById('fname').value
+            // window.ReactNativeWebView.postMessage(value);
+            if (infectionTrueElement.checked) checked_option = infectionTrueElement.value
+            for (let index = 0; index < checkboxElement.length; index++) {
+                const element = checkboxElement[index];
+                if (element.checked) checked_box.push(element.value)
+
+            }
+
+            const data = {
+                fname: fNameElement.value,
+                gender: genderElement.value,
+                hospitalized_date: hospitalizedDateElement.value,
+                infection_option: checked_option,
+                infection_checkbox: checked_box.toString()
+            }
+            console.log("🚀 ~ file: index.html ~ line 816 ~ sendData ~ data", data)
+
+            window.ReactNativeWebView.postMessage(data);
         }
     </script>
 </body>
